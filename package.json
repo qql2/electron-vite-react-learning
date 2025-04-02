@@ -14,6 +14,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prod": "cross-env NODE_ENV=production vite",
     "build": "tsc && vite build && electron-builder",
     "preview": "vite preview",
     "pretest": "vite build --mode=test",
@@ -28,6 +29,7 @@
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.3",
     "autoprefixer": "^10.4.20",
+    "cross-env": "^7.0.3",
     "electron": "^33.2.0",
     "electron-builder": "^24.13.3",
     "postcss": "^8.4.49",
@@ -40,5 +42,6 @@
     "vite-plugin-electron": "^0.29.0",
     "vite-plugin-electron-renderer": "^0.14.6",
     "vitest": "^2.1.5"
-  }
+  },
+  "build": {}
 }

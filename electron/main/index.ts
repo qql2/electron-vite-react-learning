@@ -1,8 +1,9 @@
-import { app, BrowserWindow, shell, ipcMain } from 'electron'
+import { BrowserWindow, app, ipcMain, shell } from 'electron'
+
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
-import path from 'node:path'
 import os from 'node:os'
+import path from 'node:path'
 import { update } from './update'
 
 const require = createRequire(import.meta.url)
@@ -20,9 +21,15 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 //
 process.env.APP_ROOT = path.join(__dirname, '../..')
 
+if(process.env.NODE_ENV === 'production') {
+  console.log('production')
+  process.env.VITE_DEV_SERVER_URL = ''
+}
+
 export const MAIN_DIST = path.join(process.env.APP_ROOT, 'dist-electron')
 export const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist')
 export const VITE_DEV_SERVER_URL = process.env.VITE_DEV_SERVER_URL
+
 
 process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL
   ? path.join(process.env.APP_ROOT, 'public')
@@ -59,10 +66,13 @@ async function createWindow() {
   })
 
   if (VITE_DEV_SERVER_URL) { // #298
+    console.log("dev")
     win.loadURL(VITE_DEV_SERVER_URL)
     // Open devTool if the app is not packaged
     win.webContents.openDevTools()
+    
   } else {
+    
     win.loadFile(indexHtml)
   }
 
